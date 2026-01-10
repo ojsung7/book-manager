@@ -5,7 +5,14 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "supports_credentials": True
+    }
+})
 
 DATA_FILE = 'books.pkl'
 
@@ -81,4 +88,4 @@ def delete_book(book_id):
     return jsonify({'message': '삭제되었습니다'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
